@@ -8,7 +8,7 @@ from xgboost import XGBRegressor
 import joblib
 
 # Load Dataset
-data = pd.read_csv(r"/Users/nitishkumar/Documents/Python (ALL AI:ML Projects) /Projects/Energy Forecasting with ML/datewise_predicted_consumption_temperature.csv")
+data = pd.read_csv(r"/Users/nitishkumar/Documents/Python_AI_ML_Projects/Projects/Energy Forecasting with ML/datewise_predicted_consumption_temperature.csv")
 # Convert 'Date' column to datetime
 data['Date'] = pd.to_datetime(data['Date'])
 

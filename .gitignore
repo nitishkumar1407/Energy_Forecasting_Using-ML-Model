@@ -1,0 +1,11 @@
+# Python cache files
+_pycache_/
+*.pyc
+
+# Database files
+energy_prediction.db
+
+# Model files
+model.pkl
+
+Extra

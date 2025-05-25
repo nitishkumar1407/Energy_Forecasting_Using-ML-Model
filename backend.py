@@ -14,9 +14,9 @@ CORS(app)
 # Load trained model with error handling
 try:
     model = joblib.load("model.pkl")
-    print("✅ Model loaded successfully")
+    print("Model loaded successfully")
 except Exception as e:
-    print(f"❌ Error loading model: {str(e)}")
+    print(f"Error loading model: {str(e)}")
     raise RuntimeError(f"Failed to load model: {str(e)}")
 
 # SQLAlchemy setup (updated for SQLAlchemy 2.0)
@@ -41,17 +41,13 @@ try:
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
-    print("✅ Database connection established")
+    print("Database connection established")
 except Exception as e:
-    print(f"❌ Database connection error: {str(e)}")
+    print(f"Database connection error: {str(e)}")
     raise RuntimeError(f"Database connection failed: {str(e)}")
 
 # List of trained cities
-TRAINED_CITIES = [
-    "Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain",
-    "Sagar", "Rewa", "Satna", "Ratlam", "Dewas",
-    "Khargone", "Murwara", "Bhind", "Chhindwara", "Shivpuri"
-]
+TRAINED_CITIES = [col.split('_')[1] for col in model.feature_names_in_ if col.startswith('City_')]
 
 def is_port_in_use(port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -171,8 +167,8 @@ def find_available_port(start_port=5000, max_attempts=20):
 if __name__ == '__main__':
     try:
         port = find_available_port()
-        print(f"🚀 Starting server on port {port}")
+        print(f"Starting server on port {port}")
         app.run(host='0.0.0.0', port=port, debug=True)
     except RuntimeError as e:
-        print(f"❌ {str(e)}")
+        print(f"{str(e)}")
         print("Try closing other applications using these ports or specify a different port range")

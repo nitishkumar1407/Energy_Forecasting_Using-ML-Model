@@ -4,11 +4,13 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 from sklearn.ensemble import RandomForestRegressor, StackingRegressor
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import numpy as np
 from xgboost import XGBRegressor
 import joblib
 
 # Load Dataset
-data = pd.read_csv(r"/Users/nitishkumar/Documents/Python_AI_ML_Projects/Projects/Energy Forecasting with ML/datewise_predicted_consumption_temperature.csv")
+data = pd.read_csv(r"C:\Users\harip\OneDrive\Desktop\Energy_Forecasting_Using-ML-Model\datewise_predicted_consumption_temperature.csv")
 # Convert 'Date' column to datetime
 data['Date'] = pd.to_datetime(data['Date'])
 
@@ -46,6 +48,20 @@ stack_model = StackingRegressor(
 # Train the model
 stack_model.fit(X_train, y_train)
 
+# Predict on test data
+y_pred = stack_model.predict(X_test)
+
+# Evaluation metrics
+mae = mean_absolute_error(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
+
+# Print results
+print(f"Evaluation Results:")
+print(f"MAE  : {mae:.2f}")
+print(f"RMSE : {rmse:.2f}")
+print(f"R²   : {r2:.2f}")
+
 # Save the model
 joblib.dump(stack_model, "model.pkl")
-print("✅ Model training complete and saved as 'model.pkl'")
+print("Model training complete and saved as 'model.pkl'")

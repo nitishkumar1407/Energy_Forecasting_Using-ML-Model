@@ -9,9 +9,9 @@ st.markdown("Enter the details below to get a predicted energy consumption value
 
 # City dropdown
 city = st.selectbox("City", [
-    "Select City", "Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain", "Sagar", "Rewa", "Satna",
+    "Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain", "Sagar", "Rewa", "Satna",
     "Ratlam", "Dewas", "Khargone", "Murwara", "Bhind", "Chhindwara", "Shivpuri"
-], index=0)
+], index=None, placeholder = "Select City")
 
 # Temperature input with default 00.00
 temperature = st.number_input("Temperature (°C)", min_value=-50.0, max_value=60.0, value=0.00, format="%.2f")

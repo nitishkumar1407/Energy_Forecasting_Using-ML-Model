@@ -6,6 +6,19 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 import joblib
 from flask_cors import CORS
 import socket
+import logging
+import sys
+import os
+
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s: %(message)s',
+    handlers=[
+        logging.FileHandler("app.log"),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
 
 # Flask app
 app = Flask(__name__)
@@ -14,12 +27,12 @@ CORS(app)
 # Load trained model with error handling
 try:
     model = joblib.load("model.pkl")
-    print("Model loaded successfully")
+    logging.info("Model loaded successfully")
 except Exception as e:
-    print(f"Error loading model: {str(e)}")
+    logging.error(f"Error loading model: {str(e)}")
     raise RuntimeError(f"Failed to load model: {str(e)}")
 
-# SQLAlchemy setup (updated for SQLAlchemy 2.0)
+# SQLAlchemy setup
 Base = declarative_base()
 
 class EnergyPrediction(Base):
@@ -41,9 +54,9 @@ try:
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
-    print("Database connection established")
+    logging.info("Database connection established")
 except Exception as e:
-    print(f"Database connection error: {str(e)}")
+    logging.error(f"Database connection error: {str(e)}")
     raise RuntimeError(f"Database connection failed: {str(e)}")
 
 # List of trained cities
@@ -57,36 +70,39 @@ def is_port_in_use(port):
 def predict():
     try:
         data = request.get_json()
+        logging.info(f"Received prediction request: {data}")
         
         # Validate input
         if not data:
+            logging.warning("No data provided")
             return jsonify({'error': 'No data provided'}), 400
             
         required_fields = ['city', 'temperature', 'date']
         if not all(field in data for field in required_fields):
+            logging.warning("Missing required fields")
             return jsonify({'error': 'Missing required fields'}), 400
 
         city = data['city']
         try:
             temperature = float(data['temperature'])
         except ValueError:
+            logging.warning("Invalid temperature format")
             return jsonify({'error': 'Temperature must be a number'}), 400
 
         date_str = data['date']
         try:
             date_obj = pd.to_datetime(date_str)
         except ValueError:
+            logging.warning("Invalid date format")
             return jsonify({'error': 'Invalid date format'}), 400
 
         # Prepare features
         city_features = {f'City_{c}': 0 for c in TRAINED_CITIES}
-        
         city_key = f'City_{city}'
         if city_key not in city_features:
-            return jsonify({
-                'error': f"City '{city}' not in trained city list",
-                'valid_cities': TRAINED_CITIES
-            }), 400
+            logging.warning(f"City '{city}' not in trained list")
+            return jsonify({'error': f"City '{city}' not in trained city list", 'valid_cities': TRAINED_CITIES}), 400
+        
         city_features[city_key] = 1
 
         features = {
@@ -112,7 +128,9 @@ def predict():
         # Make prediction
         try:
             predicted_consumption = model.predict(features_df)[0]
+            logging.info(f"Prediction successful: {predicted_consumption} kWh")
         except Exception as e:
+            logging.error(f"Prediction failed: {str(e)}")
             return jsonify({'error': f"Prediction failed: {str(e)}"}), 500
 
         # Save to database
@@ -130,8 +148,10 @@ def predict():
             )
             session.add(new_prediction)
             session.commit()
+            logging.info("Prediction saved to database")
         except Exception as e:
             session.rollback()
+            logging.error(f"Database error: {str(e)}")
             return jsonify({'error': f"Database error: {str(e)}"}), 500
 
         # Return response
@@ -145,6 +165,7 @@ def predict():
 
     except Exception as e:
         session.rollback()
+        logging.error(f"Unexpected error: {str(e)}")
         return jsonify({
             'error': f"Unexpected error: {str(e)}",
             'message': "An error occurred during processing"
@@ -152,6 +173,7 @@ def predict():
 
 @app.route('/health', methods=['GET'])
 def health_check():
+    logging.info("Health check called")
     return jsonify({
         'status': 'healthy',
         'model_loaded': model is not None,
@@ -166,9 +188,11 @@ def find_available_port(start_port=5000, max_attempts=20):
 
 if __name__ == '__main__':
     try:
-        port = find_available_port()
-        print(f"Starting server on port {port}")
+        port = int(os.environ.get("PORT", find_available_port()))
+        ip = socket.gethostbyname(socket.gethostname())
+        logging.info(f"Starting server on port {port}")
+        logging.info(f"Access app at: http://localhost:{port} or http://{ip}:{port}")
         app.run(host='0.0.0.0', port=port, debug=True)
     except RuntimeError as e:
-        print(f"{str(e)}")
+        logging.error(f"{str(e)}")
         print("Try closing other applications using these ports or specify a different port range")

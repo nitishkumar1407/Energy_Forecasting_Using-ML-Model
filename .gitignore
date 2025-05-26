@@ -1,11 +1,23 @@
-# Python cache files
-_pycache_/
-*.pyc
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+myenv/
+
+# Environment variable files
+.env
+
+# Logs
+*.log
 
 # Database files
 energy_prediction.db
 
-# Model files
+# Machine learning model files
 model.pkl
 
-Extra
+# OS-specific
+.DS_Store
+Thumbs.db

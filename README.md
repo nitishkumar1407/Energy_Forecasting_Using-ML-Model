@@ -1,6 +1,6 @@
 # ⚡ Energy Forecasting Using ML
 
-This project forecasts city-level daily energy consumption based on historical data and temperature trends using advanced machine learning techniques. It provides a user-friendly interface to input city, date, and temperature and outputs the expected energy consumption in kilowatt-hours (kWh). It includes:
+This project forecasts city-level daily energy consumption based on historical data and temperature trends using advanced machine learning techniques. It provides a user-friendly interface to input city, date, temperature and outputs the expected energy consumption in kilowatt-hours (kWh). It includes:
 
 - A machine learning pipeline (Random Forest + XGBoost + Linear Regression)
 - A Flask backend API for predictions and database storage

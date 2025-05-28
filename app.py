@@ -10,7 +10,7 @@ st.markdown("Enter the details below to get a predicted energy consumption value
 # City dropdown
 city = st.selectbox("City", [
     "Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain", "Sagar", "Rewa", "Satna",
-    "Ratlam", "Dewas", "Khargone", "Murwara", "Bhind", "Chhindwara", "Shivpuri"
+    "Ratlam", "Dewas", "Khargone", "Singrauli", "Khandwa", "Chhindwara", "Sehore"
 ], index=None, placeholder = "Select City")
 
 # Temperature input with default 00.00
@@ -32,7 +32,7 @@ if st.button(" Predict Energy Consumption"):
 
         with st.spinner("Sending data to the backend for prediction..."):
             try:
-                response = requests.post("http://127.0.0.1:5000/predict", json=payload, timeout=5)
+                response = requests.post("http://127.0.0.1:5001/predict", json=payload, timeout=5)
 
                 if response.status_code == 200:
                     result = response.json()

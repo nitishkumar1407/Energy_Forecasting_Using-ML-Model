@@ -10,7 +10,7 @@ from xgboost import XGBRegressor
 import joblib
 
 # Load Dataset
-data = pd.read_csv(r"C:\Users\harip\OneDrive\Desktop\Energy_Forecasting_Using-ML-Model\mp_citywise_energy_temp_daily_2019_2024.csv", encoding='latin1')
+data = pd.read_csv(r"/Users/adityagarg/Energy_Forecasting_Using-ML-Model-2/mp_citywise_energy_temp_daily_2019_2024.csv", encoding='latin1')
 
 # Check required columns
 required_cols = ['City', 'Year', 'Month', 'Date', 'Temperature (°C)', 'Total_Consumption_kWh']
@@ -27,23 +27,29 @@ data['day'] = data['Date'].dt.day
 data['dayofweek'] = data['Date'].dt.dayofweek
 data['dayofyear'] = data['Date'].dt.dayofyear
 
-# Create dummy variables for City (categorical)
-X = pd.get_dummies(data[['month', 'day', 'dayofweek', 'dayofyear', 'City']], drop_first=True)
+# Create dummy variables for City (keep all cities)
+city_dummies = pd.get_dummies(data['City'], prefix='City', drop_first=False)
 
-# Add numeric feature
-X['Temperature (°C)'] = data['Temperature (°C)']
-
-# Define target variable
+# Combine features
+X = pd.concat([data[['month', 'day', 'dayofweek', 'dayofyear', 'Temperature (°C)']], city_dummies], axis=1)
 y = data['Total_Consumption_kWh']
 
 # Train-test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Base models
-rf = RandomForestRegressor(n_estimators=100, random_state=42)
-xgb = XGBRegressor(n_estimators=100, learning_rate=0.1, random_state=42)
+# --- Check if all cities are in the training set ---
+train_city_cols = [col for col in X_train.columns if col.startswith("City_")]
+test_city_cols = [col for col in X_test.columns if col.startswith("City_")]
 
-# Meta-learner with scaling
+missing_cities_in_train = set(test_city_cols) - set(train_city_cols)
+if missing_cities_in_train:
+    print(f"Warning: These cities are in test set but not in training set: {missing_cities_in_train}")
+else:
+    print("All cities are present in the training set.")
+
+# Define models
+rf = RandomForestRegressor(n_estimators=30, n_jobs=-1, random_state=42)
+xgb = XGBRegressor(n_estimators=30, n_jobs=-1, random_state=42)
 meta_model = make_pipeline(StandardScaler(), LinearRegression())
 
 # Stacking Regressor
@@ -55,10 +61,8 @@ stack_model = StackingRegressor(
 # Train the model
 stack_model.fit(X_train, y_train)
 
-# Predict on test data
+# Predict and evaluate
 y_pred = stack_model.predict(X_test)
-
-# Evaluation metrics
 mae = mean_absolute_error(y_test, y_pred)
 rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 r2 = r2_score(y_test, y_pred)

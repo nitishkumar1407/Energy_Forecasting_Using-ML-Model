@@ -71,6 +71,7 @@ To install all required dependencies:
 ```bash
 pip install -r requirements.txt
 Ensure you have Python 3.7+ installed.
+```
 
 ---
 

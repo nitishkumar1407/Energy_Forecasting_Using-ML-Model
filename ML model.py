@@ -10,9 +10,16 @@ from xgboost import XGBRegressor
 import joblib
 
 # Load Dataset
-data = pd.read_csv(r"C:\Users\harip\OneDrive\Desktop\Energy_Forecasting_Using-ML-Model\datewise_predicted_consumption_temperature.csv")
+data = pd.read_csv(r"C:\Users\harip\OneDrive\Desktop\Energy_Forecasting_Using-ML-Model\mp_citywise_energy_temp_daily_2019_2024.csv", encoding='latin1')
+
+# Check required columns
+required_cols = ['City', 'Year', 'Month', 'Date', 'Temperature (°C)', 'Total_Consumption_kWh']
+for col in required_cols:
+    if col not in data.columns:
+        raise ValueError(f"Missing required column: {col}")
+
 # Convert 'Date' column to datetime
-data['Date'] = pd.to_datetime(data['Date'])
+data['Date'] = pd.to_datetime(data['Date'], dayfirst=True)
 
 # Extract date-based features
 data['month'] = data['Date'].dt.month
@@ -24,10 +31,10 @@ data['dayofyear'] = data['Date'].dt.dayofyear
 X = pd.get_dummies(data[['month', 'day', 'dayofweek', 'dayofyear', 'City']], drop_first=True)
 
 # Add numeric feature
-X['Predicted Temperature (°C)'] = data['Predicted Temperature (°C)']
+X['Temperature (°C)'] = data['Temperature (°C)']
 
 # Define target variable
-y = data['Predicted Units Consumed (kWh)']
+y = data['Total_Consumption_kWh']
 
 # Train-test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)

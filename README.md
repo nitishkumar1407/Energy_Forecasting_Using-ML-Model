@@ -10,14 +10,16 @@ This project forecasts city-level daily energy consumption based on historical d
 
 ## 📁 Project Structure
 
-├── ML_model.py # Model training and saving (model.pkl)
-├── backend.py # Flask API to serve predictions
-├── app.py # Streamlit frontend for user interaction
-├── requirements.txt # Python dependencies
-├── .gitignore # Ignored files for Git
-├── model.pkl # Saved stacked regression model
-├── energy_prediction.db # SQLite database storing prediction records
-└── datewise_predicted_consumption_temperature.csv # Training dataset
+```
+├── ML_model.py                             # Model training and saving (model.pkl)
+├── backend.py                              # Flask API to serve predictions
+├── app.py                                  # Streamlit frontend for user interaction
+├── requirements.txt                        # Python dependencies
+├── .gitignore                              # Ignored files for Git
+├── model.pkl                               # Saved stacked regression model
+├── energy_prediction.db                    # SQLite database storing prediction records
+├── datewise_predicted_consumption_temperature.csv  # Training dataset
+```
 
 ---
 
@@ -70,6 +72,8 @@ To install all required dependencies:
 pip install -r requirements.txt
 Ensure you have Python 3.7+ installed.
 
+---
+
 ## 🖼️ User Interface
 
 The app includes a Streamlit frontend for user interaction:
@@ -78,18 +82,22 @@ The app includes a Streamlit frontend for user interaction:
 - Input date and temperature
 - View predicted energy consumption instantly
 
-### 📷 Screenshot
+## 📷 Screenshot
 
 ![Streamlit UI Screenshot](images/streamlit_ui.png)
 
-🗃️ Database
+---
+
+## 🗃️ Database
 A lightweight SQLite database (energy_prediction.db) stores:
 
 Date, city, temperature
 Predicted consumption
 (Optional) Actual consumption for evaluation
 
-🚀 Future Enhancements
+---
+
+## 🚀 Future Enhancements
 Integrate real-time weather API for temperature input
 
 Add interactive visual dashboards (trends, comparisons)
@@ -98,7 +106,9 @@ Enable online model retraining from user feedback
 
 Incorporate DISCOM data like peak demand, load curves
 
-🙋‍♀️ Contributors
+---
+
+## 🙋‍♀️ Contributors
 This is a collaborative group project by passionate undergraduates from LNCT College, addressing real-world energy forecasting challenges using ML.
 
 Haripriya Mahajan (Backend & Model Development)

@@ -83,7 +83,7 @@ The app includes a Streamlit frontend for user interaction:
 - Input date and temperature
 - View predicted energy consumption instantly
 
-## 📷 Screenshot
+### 📷 Screenshot
 
 ![Streamlit UI Screenshot](images/streamlit_ui.png)
 

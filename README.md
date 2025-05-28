@@ -119,4 +119,4 @@ This is a collaborative group project by passionate undergraduates from LNCT Col
 -- GitHub: https://github.com/nitishkumar1407
 
 - Anjali Patel (Frontend with Streamlit)
--- GitHub: [link pending]
+-- GitHub: https://github.com/anjalip2623

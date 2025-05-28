@@ -115,7 +115,7 @@ This is a collaborative group project by passionate undergraduates from LNCT Col
 - Aditya Garg (Backend & Model Development)
 -- GitHub: https://github.com/Adiigarg07
 
-- Nitish Choudhary (Frontend with Streamlit)
+- Nitish Kumar (Frontend with Streamlit)
 -- GitHub: https://github.com/nitishkumar1407
 
 - Anjali Patel (Frontend with Streamlit)

@@ -92,34 +92,31 @@ The app includes a Streamlit frontend for user interaction:
 ## 🗃️ Database
 A lightweight SQLite database (energy_prediction.db) stores:
 
-Date, city, temperature
-Predicted consumption
-(Optional) Actual consumption for evaluation
+- Date, city, temperature
+- Predicted consumption
+- (Optional) Actual consumption for evaluation
 
 ---
 
 ## 🚀 Future Enhancements
-Integrate real-time weather API for temperature input
-
-Add interactive visual dashboards (trends, comparisons)
-
-Enable online model retraining from user feedback
-
-Incorporate DISCOM data like peak demand, load curves
+- Integrate real-time weather API for temperature input
+- Add interactive visual dashboards (trends, comparisons)
+- Enable online model retraining from user feedback
+- Incorporate DISCOM data like peak demand, load curves
 
 ---
 
 ## 🙋‍♀️ Contributors
 This is a collaborative group project by passionate undergraduates from LNCT College, addressing real-world energy forecasting challenges using ML.
 
-Haripriya Mahajan (Backend & Model Development)
-GitHub: @Haripriya-Mahajan
+- Haripriya Mahajan (Backend & Model Development)
+-- GitHub: [@Haripriya-Mahajan]
 
-Aditya Garg (Backend & Model Development)
-GitHub: @Adiigarg07
+- Aditya Garg (Backend & Model Development)
+-- GitHub: [@Adiigarg07]
 
-Nitish Choudhary (Frontend with Streamlit)
-GitHub: @nitishkumar1407
+- Nitish Choudhary (Frontend with Streamlit)
+-- GitHub: [@nitishkumar1407]
 
-Anjali Patel (Frontend with Streamlit)
-GitHub: [link pending]
+- Anjali Patel (Frontend with Streamlit)
+-- GitHub: [link pending]

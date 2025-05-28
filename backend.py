@@ -110,7 +110,7 @@ def predict():
             'day': date_obj.day,
             'dayofweek': date_obj.dayofweek,
             'dayofyear': date_obj.dayofyear,
-            'Predicted Temperature (°C)': temperature,
+            'Temperature (°C)': temperature,
             **city_features
         }
 
@@ -159,7 +159,7 @@ def predict():
             'date': date_str,
             'city': city,
             'temperature': temperature,
-            'predicted_consumption_kWh': round(float(predicted_consumption), 2),
+            'Total_Consumption_kWh': round(float(predicted_consumption), 2),
             'status': "Prediction successful and saved to database"
         })
 

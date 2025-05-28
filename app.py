@@ -38,10 +38,7 @@ if st.button(" Predict Energy Consumption"):
                     result = response.json()
                     st.success("Prediction Successful!")
                     st.markdown(f"""
-                        ### Predicted Energy Consumption: ⁠ {result['predicted_consumption_kWh']} kWh
-                        - City: {result['city']}
-                        - Date: {result['date']}
-                        - Temperature: {result['temperature']} °C
+                        ### Predicted Energy Consumption: ⁠ {result['Total_Consumption_kWh']} kWh
                     """)
                 else:
                     st.error("Backend returned an error.")

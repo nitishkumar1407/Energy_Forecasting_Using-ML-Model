@@ -110,13 +110,13 @@ A lightweight SQLite database (energy_prediction.db) stores:
 This is a collaborative group project by passionate undergraduates from LNCT College, addressing real-world energy forecasting challenges using ML.
 
 - Haripriya Mahajan (Backend & Model Development)
--- GitHub: https://github.com/Haripriya-Mahajan
+-- Linkedin:https://www.linkedin.com/in/haripriya-mahajan/
 
 - Aditya Garg (Backend & Model Development)
--- GitHub: https://github.com/Adiigarg07
+-- Linkedin:https://www.linkedin.com/in/adityagarg3434/
 
 - Nitish Kumar (Frontend with Streamlit)
--- GitHub: https://github.com/nitishkumar1407
+-- Linkedin:https://www.linkedin.com/in/nitish07kumar/
 
 - Anjali Patel (Frontend with Streamlit)
--- GitHub: https://github.com/anjalip2623
+-- https://www.linkedin.com/in/anjali-patel-42b796348/
